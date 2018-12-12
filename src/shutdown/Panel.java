@@ -145,6 +145,9 @@ public class Panel extends JPanel {
             if(!o.getText().toLowerCase().equals("shutdown") && timeSec <= 0 && !stop){
                 if(JOptionPane.showConfirmDialog (null, "Forgot time? \nor do you want to shutdown now?","Warning",JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){  
                    stop = true;
+                }else{
+                    turnOff.shutdown(timeSec);                
+                    System.exit(0);
                 }
             }else if(!stop && !o.getText().toLowerCase().equals("shutdown")){
                 canprint = true;
