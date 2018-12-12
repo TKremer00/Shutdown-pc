@@ -7,21 +7,22 @@ public class TurnOff {
     //Shutdown pc over time or now.
     public void shutdown(int time) 
     {    
-        String shutdownCommand = null, t = time == 0 ? "now" : String.valueOf(time);
+        String command = null, t = time == 0 ? "now" : String.valueOf(time);
         
         switch(DetermineOs.returnOs()){
             case "win" :
-                shutdownCommand = "shutdown.exe -s -t " + t;
+                command = "shutdown.exe -s -t " + t;
                 break;
             case "mac" : 
-                shutdownCommand = "shutdown -h " + t;
+                command = "shutdown -h " + t;
                 break;
             case "lin" :
-                shutdownCommand = "shutdown -r " + t;
+                command = "shutdown -r " + t;
+                break;
         }
         
         try {
-            Runtime.getRuntime().exec(shutdownCommand);
+            Runtime.getRuntime().exec(command);
         } catch (IOException ex){}
     }
     

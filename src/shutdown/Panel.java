@@ -15,7 +15,7 @@ public class Panel extends JPanel {
     private List<JTextField> fields;
     private List<JLabel> lables;
     private List<JButton> buttons;
-    private int hours = 0,minutes = 0,seconds = 0;
+    private int[] intArray = new int[] {/*hours*/0 ,/*minuts*/0,/*seconds*/0};
     private boolean canprint = false;
     
     public Panel()
@@ -23,8 +23,7 @@ public class Panel extends JPanel {
         setLayout(null);
         fields = new ArrayList<>(Arrays.asList(new JTextField(), new JTextField(), new JTextField()));
         lables = new ArrayList<>(Arrays.asList(new JLabel(":"),new JLabel(":")));
-        buttons = new ArrayList<>(Arrays.asList(new JButton("Shutdown"), new JButton("Shutdown over time"), new JButton("Abort shutdown"), new JButton("Exit")));
-       
+        buttons = new ArrayList<>(Arrays.asList(new JButton("Shutdown"), new JButton("Shutdown over time"), new JButton("Abort shutdown"), new JButton("Exit")));   
         turnOff = new TurnOff();
         setupButtons();
     }
@@ -74,19 +73,19 @@ public class Panel extends JPanel {
     private void countDown()
     {
         repaint();
-        if(seconds != 0){
-            if(seconds <= 1 && minutes <= 0 && hours <= 0){
-                seconds--;
+        if(intArray[2] != 0){
+            if(intArray[2] <= 1 && intArray[1] <= 0 && intArray[0] <= 0){
+                intArray[2]--;
                 System.exit(0);
             }
-            seconds--;               
-        }else if(seconds <= 0){
-            minutes--;
-            seconds = 59;
+            intArray[2]--;
+        }else if(intArray[2] <= 0){
+            intArray[1]--;
+            intArray[2] = 59;
             
-            if(minutes <= -1){
-                hours--;
-                minutes = 59;
+            if(intArray[1] <= -1){
+                intArray[0]--;
+                intArray[1] = 59;
             }
         }
     }
@@ -96,7 +95,6 @@ public class Panel extends JPanel {
     {
         super.paintComponent(g); 
         g.setFont(g.getFont().deriveFont( 80.0f ));
-        int[] intArray = new int[] {hours , minutes, seconds};
         if(canprint){
             for (int i = 0; i < intArray.length; i++) {
                 g.drawString(String.format("%02d", intArray[i]), 10 + (115 * i), 140);
@@ -120,29 +118,29 @@ public class Panel extends JPanel {
             
             try{
                 if (fields.get(2).getText().length() != 0){
-                    seconds += Integer.parseInt(fields.get(2).getText());
-                    while (seconds >= 3600){
-                        seconds -= 3600;
-                        hours++;
+                    intArray[2] += Integer.parseInt(fields.get(2).getText());
+                    while (intArray[2] >= 3600){
+                        intArray[2] -= 3600;
+                        intArray[0]++;
                     }
                     
-                    while (seconds >= 60){
-                        seconds -= 60;
-                        minutes++;
+                    while (intArray[2] >= 60){
+                        intArray[2] -= 60;
+                        intArray[1]++;
                     }
                 }
                 
                 if(fields.get(1).getText().length() != 0){
-                    minutes += Integer.parseInt(fields.get(1).getText());
+                    intArray[1] += Integer.parseInt(fields.get(1).getText());
                     
-                    while (minutes >= 60){
-                        minutes -= 60;
-                        hours++;
+                    while (intArray[1] >= 60){
+                        intArray[1] -= 60;
+                        intArray[0]++;
                     }
                 }
                 
                 if(fields.get(0).getText().length() != 0){
-                    hours += Integer.parseInt(fields.get(0).getText());
+                    intArray[0] += Integer.parseInt(fields.get(0).getText());
                 }
                 
                 
@@ -151,9 +149,9 @@ public class Panel extends JPanel {
                 stop = true;
             }
             
-            timeSec = hours * 3600;
-            timeSec += minutes * 60;
-            timeSec += seconds;
+            timeSec = intArray[0] * 3600;
+            timeSec += intArray[1] * 60;
+            timeSec += intArray[2];
             
             if(!o.getText().toLowerCase().equals("shutdown") && timeSec <= 0 && !stop){
                 if(JOptionPane.showConfirmDialog (null, "Forgot time? \nor do you want to shutdown now?","Warning",JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){  
@@ -206,8 +204,8 @@ public class Panel extends JPanel {
             canprint = false;
             for (int i = 0; i < fields.size(); i++) {
                 fields.get(i).setText("");
+                intArray[i] = 0;
             }
-            hours = minutes = seconds = 0;
             remove(buttons.get(2));
             add(buttons.get(3));
             repaint();
