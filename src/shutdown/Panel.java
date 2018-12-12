@@ -8,7 +8,7 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class Paneel extends JPanel {
+public class Panel extends JPanel {
 
     private Timer timer;
     private TurnOff turnOff;
@@ -18,7 +18,7 @@ public class Paneel extends JPanel {
     private int hours = 0,minutes = 0,seconds = 0;
     private boolean canprint = false;
     
-    public Paneel()
+    public Panel()
     { 
         setLayout(null);
         fields = new ArrayList<>(Arrays.asList(new JTextField(), new JTextField(), new JTextField()));
@@ -142,7 +142,7 @@ public class Paneel extends JPanel {
             timeSec += minutes * 60;
             timeSec += seconds;
             
-            if(!o.getText().toLowerCase().equals("shutdown") && timeSec <= 0){
+            if(!o.getText().toLowerCase().equals("shutdown") && timeSec <= 0 && !stop){
                 if(JOptionPane.showConfirmDialog (null, "Forgot time? \nor do you want to shutdown now?","Warning",JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){  
                    stop = true;
                 }

@@ -15,7 +15,7 @@ public class Shutdown extends JFrame
         FrameDragListener frameDragListener = new FrameDragListener(frame);
         frame.addMouseListener(frameDragListener);
         frame.addMouseMotionListener(frameDragListener);
-        frame.setContentPane(new Paneel());
+        frame.setContentPane(new Panel());
         frame.setVisible(true);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
