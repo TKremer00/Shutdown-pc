@@ -98,7 +98,6 @@ public class Panel extends JPanel {
         super.paintComponent(g); 
         g.setFont(g.getFont().deriveFont( 80.0f ));
         int[] intArray = new int[] {hours , minutes, seconds};
-        
         if(canprint){
             for (int i = 0; i < intArray.length; i++) {
                 g.drawString(String.format("%02d", intArray[i]), 10 + (115 * i), 140);
@@ -121,30 +120,32 @@ public class Panel extends JPanel {
             boolean stop = false;
             
             try{
-                if(fields.get(0).getText().length() != 0){
-                    hours = Integer.parseInt(fields.get(0).getText());
+                if (fields.get(2).getText().length() != 0){
+                    seconds += Integer.parseInt(fields.get(2).getText());
+                    while (seconds >= 3600){
+                        seconds -= 3600;
+                        hours++;
+                    }
+                    
+                    while (seconds >= 60){
+                        seconds -= 60;
+                        minutes++;
+                    }
                 }
                 
                 if(fields.get(1).getText().length() != 0){
-                    minutes = Integer.parseInt(fields.get(1).getText());
-                
-                    while (minutes > 60){
+                    minutes += Integer.parseInt(fields.get(1).getText());
+                    
+                    while (minutes >= 60){
                         minutes -= 60;
                         hours++;
                     }
                 }
                 
-                if (fields.get(2).getText().length() != 0){
-                    seconds = Integer.parseInt(fields.get(2).getText());
-                    while (seconds > 3600){
-                        seconds -= 3600;
-                        hours++;
-                    }
-                    while (seconds > 60){
-                        seconds -=60;
-                        minutes++;
-                    }
+                if(fields.get(0).getText().length() != 0){
+                    hours += Integer.parseInt(fields.get(0).getText());
                 }
+                
                 
             }catch (NumberFormatException e){
                 JOptionPane.showMessageDialog(null, "This is not a time " + fields.get(0).getText() + ":" + fields.get(1).getText() + ":" + fields.get(2).getText());
@@ -163,9 +164,6 @@ public class Panel extends JPanel {
                     System.exit(0);
                 }
             }else if(!stop && !o.getText().toLowerCase().equals("shutdown")){
-                fields.get(0).setText(String.format("%02d", hours));
-                fields.get(1).setText(String.format("%02d", minutes));
-                fields.get(2).setText(String.format("%02d", seconds));
                 canprint = true;
                 buttons.get(2).setBounds(10, 210, 320, 30);
                 remove(buttons.get(3));
