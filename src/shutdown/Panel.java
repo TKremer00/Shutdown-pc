@@ -53,12 +53,11 @@ public class Panel extends JPanel {
         
         //Abort button
         buttons.get(2).addActionListener(new AbortHandeler());
-        buttons.get(2).setBounds(10,210 ,160 ,30);
-        add(buttons.get(2));
+        buttons.get(2).setBounds(10,210 ,320 ,30);
         
         //Exit button
         buttons.get(3).addActionListener(new CloseHandeler());
-        buttons.get(3).setBounds(170,210,160 ,30);
+        buttons.get(3).setBounds(10,210,320 ,30);
         add(buttons.get(3)); 
     }
     
@@ -165,8 +164,8 @@ public class Panel extends JPanel {
                 }
             }else if(!stop && !o.getText().toLowerCase().equals("shutdown")){
                 canprint = true;
-                buttons.get(2).setBounds(10, 210, 320, 30);
                 remove(buttons.get(3));
+                add(buttons.get(2));
                 update();
                 turnOff.shutdown(timeSec);
             }else if(!stop){
@@ -209,7 +208,7 @@ public class Panel extends JPanel {
                 fields.get(i).setText("");
             }
             hours = minutes = seconds = 0;
-            buttons.get(2).setBounds(10,210 ,160 ,30);
+            remove(buttons.get(2));
             add(buttons.get(3));
             repaint();
             turnOff.abortShutdown();
