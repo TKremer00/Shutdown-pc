@@ -23,7 +23,7 @@ public class Paneel extends JPanel {
         setLayout(null);
         fields = new ArrayList<>(Arrays.asList(new JTextField(), new JTextField(), new JTextField()));
         lables = new ArrayList<>(Arrays.asList(new JLabel(":"),new JLabel(":")));
-        buttons = new ArrayList<>(Arrays.asList(new JButton("Shutdown"), new JButton("Shutdown over time"), new JButton("Abort shutdown"), new JButton("Abort and exit")));
+        buttons = new ArrayList<>(Arrays.asList(new JButton("Shutdown"), new JButton("Shutdown over time"), new JButton("Abort shutdown"), new JButton("Exit")));
        
         turnOff = new TurnOff();
         setupButtons();
