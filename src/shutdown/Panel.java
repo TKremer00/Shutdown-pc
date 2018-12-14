@@ -168,7 +168,6 @@ public class Panel extends JPanel {
                 turnOff.shutdown(timeSec);
             }else if(!stop){
                 turnOff.shutdown(timeSec);                
-                System.exit(0);
             }
         }
     }
