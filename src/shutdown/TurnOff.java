@@ -7,7 +7,7 @@ public class TurnOff {
     //Shutdown pc over time or now.
     public void shutdown(int time) 
     {    
-        String command = null, t = time == 0 ? "now" : String.valueOf(time);
+        String command = null, t = time == 0 ? String.valueOf(10) : String.valueOf(time);
         
         switch(DetermineOs.returnOs()){
             case "win" :
@@ -20,7 +20,6 @@ public class TurnOff {
                 command = "shutdown -r " + t;
                 break;
         }
-        
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex){}
@@ -41,7 +40,6 @@ public class TurnOff {
             case "lin" :
                 command = "shutdown -c";
         }
-        
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex){}
